@@ -8,7 +8,7 @@ export default function PaperDetail({ paper }) {
 
   if (!paper) {
     return (
-      <div className="bg-[#717171] rounded-2xl w-full h-full flex items-center justify-center">
+      <div className="bg-[#555555] rounded-2xl w-full h-full flex items-center justify-center">
         <p className="text-white text-center px-8">
           When you click on the paper,
           <br />

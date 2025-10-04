@@ -22,7 +22,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#2D2D2D] text-white">
+    <div className="min-h-screen bg-[#1D1D1D] text-white">
       <header className="border-b border-white">
         <div className="container mx-auto px-6 py-4">
           <h1 className="text-2xl font-bold">CosmosX</h1>
@@ -61,7 +61,7 @@ export default function Home() {
             <input
               type="text"
               placeholder="What topics are you interested in?"
-              className="w-full pl-16 pr-6 py-5 rounded-full text-lg text-gray-500 bg-white focus:outline-none focus:ring-5 focus:ring-black transition-all"
+              className="w-full pl-16 pr-6 py-5 rounded-full text-lg text-gray-900 bg-white focus:outline-none focus:ring-5 focus:ring-[#869DAD] transition-all"
             />
           </div>
         </div>

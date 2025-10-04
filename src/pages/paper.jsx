@@ -22,7 +22,7 @@ export default function Paper() {
   const currentPaper = paperData.find((paper) => paper.id === viewedPaper);
 
   return (
-    <div className="max-h-screen bg-[#2D2D2D] text-white flex p-8 gap-8">
+    <div className="max-h-screen bg-[#1D1D1D] text-white flex p-8 gap-8">
       {/* 왼쪽 영역 */}
       <div className="w-2/5 flex flex-col">
         <div className="flex items-center gap-6 mb-6">
@@ -65,7 +65,7 @@ export default function Paper() {
             <HelpCircle className="w-6 h-6 text-gray-900" />
           </button>
 
-          <button className="flex items-center gap-2 bg-white text-gray-900 w-full py-3 rounded-xl font-semibold hover:bg-[#717171] hover:text-white transition-colors justify-center">
+          <button className="flex items-center gap-2 bg-white text-gray-900 w-full py-3 rounded-xl font-semibold hover:bg-[#869DAD] hover:text-white transition-colors justify-center">
             <Send className="w-5 h-5" />
             Find Research Gap
           </button>

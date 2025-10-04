@@ -19,7 +19,7 @@ export default function PaperCard({
         }}
         className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 
           transition-colors duration-300
-          ${isChecked ? "bg-[#F8F8F8]" : "bg-[#8E8E8E] hover:bg-[#A0A0A0]"}
+          ${isChecked ? "bg-[#869DAD]" : "bg-[#8E8E8E] hover:bg-[#869DAD]"}
         `}
       >
         <svg
@@ -43,7 +43,7 @@ export default function PaperCard({
       <button
         onClick={onView}
         className={`rounded-lg p-4 flex-1 text-left transition-all duration-300
-          ${isViewed ? "bg-[#717171] " : "bg-[#E8E8E8] hover:bg-[#D8D8D8]"}
+          ${isViewed ? "bg-[#717171] " : "bg-[#FFFFFF] hover:bg-[#D8D8D8]"}
         `}
       >
         <h3
