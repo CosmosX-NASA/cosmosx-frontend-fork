@@ -5,13 +5,18 @@ export default function PaperCard({
   journal,
   description,
   isChecked,
+  isViewed,
   onToggle,
+  onView,
 }) {
   return (
     <div className="flex items-start gap-6 mb-4">
       {/* 사용자 논문 체크 */}
       <button
-        onClick={onToggle}
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggle();
+        }}
         className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 
           transition-colors duration-300
           ${isChecked ? "bg-[#F8F8F8]" : "bg-[#8E8E8E] hover:bg-[#A0A0A0]"}
@@ -35,11 +40,34 @@ export default function PaperCard({
       </button>
 
       {/* 논문 내용 (왼쪽 영역) */}
-      <div className="bg-[#E8E8E8] rounded-lg p-4 flex-1">
-        <h3 className="text-sm font-semibold text-gray-900 mb-1">{title}</h3>
-        <p className="text-xs text-gray-700 mb-2">{journal}</p>
-        <p className="text-xs text-gray-600">{description}</p>
-      </div>
+      <button
+        onClick={onView}
+        className={`rounded-lg p-4 flex-1 text-left transition-all duration-300
+          ${isViewed ? "bg-[#717171] " : "bg-[#E8E8E8] hover:bg-[#D8D8D8]"}
+        `}
+      >
+        <h3
+          className={`text-sm font-semibold mb-1 
+          ${isViewed ? "text-white" : "text-gray-900"}
+        `}
+        >
+          {title}
+        </h3>
+        <p
+          className={`text-xs mb-2
+          ${isViewed ? "text-gray-200" : "text-gray-700"}
+        `}
+        >
+          {journal}
+        </p>
+        <p
+          className={`text-xs
+          ${isViewed ? "text-gray-300" : "text-gray-600"}
+        `}
+        >
+          {description}
+        </p>
+      </button>
     </div>
   );
 }

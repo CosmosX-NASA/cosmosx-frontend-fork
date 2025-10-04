@@ -2,13 +2,24 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Rocket, HelpCircle, Send } from "lucide-react";
 import PaperCard from "../components/PaperCard";
+import PaperDetail from "../components/PaperDetail";
 import HelpModal from "../components/HelpModal";
 import usePaperSelection from "../hooks/usePaperSelection";
 import { paperData } from "../constants/PaperCardData";
 
 export default function Paper() {
-  const { selectedPapers, togglePaper, isSelected } = usePaperSelection();
+  const {
+    selectedPapers,
+    viewedPaper,
+    togglePaper,
+    selectPaperToView,
+    isSelected,
+    isViewed,
+  } = usePaperSelection();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+
+  // 현재 보고 있는 논문 정보
+  const currentPaper = paperData.find((paper) => paper.id === viewedPaper);
 
   return (
     <div className="max-h-screen bg-[#2D2D2D] text-white flex p-8 gap-8">
@@ -38,7 +49,9 @@ export default function Paper() {
               journal={paper.journal}
               description={paper.description}
               isChecked={isSelected(paper.id)}
+              isViewed={isViewed(paper.id)}
               onToggle={() => togglePaper(paper.id)}
+              onView={() => selectPaperToView(paper.id)}
             />
           ))}
         </div>
@@ -60,14 +73,8 @@ export default function Paper() {
       </div>
 
       {/* 오른쪽 영역 */}
-      <div className="w-3/5 flex items-center justify-center">
-        <div className="bg-[#717171] rounded-2xl w-full h-full flex items-center justify-center">
-          <p className="text-white text-center px-8">
-            When you click on the paper,
-            <br />
-            you can access the summarized core content.
-          </p>
-        </div>
+      <div className="w-3/5 flex flex-col overflow-auto break-words">
+        <PaperDetail paper={currentPaper} />
       </div>
 
       {/* 도움말 모달 */}
