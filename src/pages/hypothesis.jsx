@@ -85,7 +85,7 @@ export default function Hypotheses() {
     queryKey: ['hypotheses', userIdParam || 'me'],
     queryFn: async () => {
       const resolvedUserId = userIdParam || getStoredUserId();
-      let apiUrl = '/api/hypothesis/me';
+      let apiUrl = 'https://api.cosmosx.site/api/hypothesis/me';
       if (resolvedUserId) {
         apiUrl += `?userId=${encodeURIComponent(resolvedUserId)}`;
       }

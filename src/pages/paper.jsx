@@ -39,7 +39,9 @@ export default function Paper() {
     queryKey: ['repoData', searchParams.get('query')],
     queryFn: async () => {
       const response = await fetch(
-        `/api/researchs?search=${searchParams.get('query')}&pageSize=5`
+        `https://api.cosmosx.site/api/researchs?search=${searchParams.get(
+          'query'
+        )}&pageSize=5`
       );
 
       if (!response.ok) {
@@ -66,7 +68,9 @@ export default function Paper() {
     }
 
     console.log('Finding research gaps for papers:', selectedPapers);
-    navigate(`/research-gap?papers=${selectedPapers.join(',')}`);
+    navigate(
+      `https://api.cosmosx.site/research-gap?papers=${selectedPapers.join(',')}`
+    );
   };
 
   const paperListContent = (() => {

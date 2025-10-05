@@ -19,7 +19,7 @@ export default function ResearchGap() {
     queryFn: async () => {
       let papers = searchParams.get('papers');
       if (!papers) papers = localStorage.getItem('selectedPapers');
-      let request_api = '/api/researchs/gaps';
+      let request_api = 'https://api.cosmosx.site/api/researchs/gaps';
       if (!papers) return { gaps: [] };
       request_api += `?researchsIds=${papers}`;
 
