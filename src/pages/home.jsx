@@ -1,25 +1,34 @@
-import React from "react";
-import { Search } from "lucide-react";
-import FeatureCard from "../components/HomeCard";
+import React from 'react';
+import { Search } from 'lucide-react';
+import FeatureCard from '../components/HomeCard';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  let navigate = useNavigate();
   const cards = [
     {
       id: 1,
-      image: "/main01.png",
-      title: "Discover and summarize papers related to your topic",
+      image: '/main01.png',
+      title: 'Discover and summarize papers related to your topic',
     },
     {
       id: 2,
-      image: "/main02.png",
-      title: "Identify research gaps from the selected papers",
+      image: '/main02.png',
+      title: 'Identify research gaps from the selected papers',
     },
     {
       id: 3,
-      image: "/main03.png",
-      title: "Review the hypotheses",
+      image: '/main03.png',
+      title: 'Review the hypotheses',
     },
   ];
+
+  const search = (e) => {
+    e.preventDefault();
+    const searchTerm = e.target.elements[0].value;
+    console.log('Searching for:', searchTerm);
+    navigate(`/paper?query=${encodeURIComponent(searchTerm)}`);
+  };
 
   return (
     <div className="min-h-screen bg-[#1D1D1D] text-white">
@@ -53,7 +62,7 @@ export default function Home() {
         </div>
 
         {/* 검색바 */}
-        <div className="max-w-3xl mx-auto">
+        <form className="max-w-3xl mx-auto" onSubmit={(e) => search(e)}>
           <div className="relative">
             <div className="absolute left-6 top-1/2 transform -translate-y-1/2">
               <Search className="w-6 h-6 text-gray-800" />
@@ -64,7 +73,7 @@ export default function Home() {
               className="w-full pl-16 pr-6 py-5 rounded-full text-lg text-gray-900 bg-white focus:outline-none focus:ring-5 focus:ring-[#869DAD] transition-all"
             />
           </div>
-        </div>
+        </form>
       </main>
     </div>
   );
