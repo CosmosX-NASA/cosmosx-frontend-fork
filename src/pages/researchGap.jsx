@@ -1,32 +1,32 @@
-import React, { useState, useMemo } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import GapCard from '../components/GapCard';
-import ChoiceList from '../components/ChoiceList';
-import IntroModal from '../components/IntroModal';
-import useGapSelection from '../hooks/useGapSelection';
-import { analystDescriptions } from '../constants/ResearchGapData';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState, useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import GapCard from "../components/GapCard";
+import ChoiceList from "../components/ChoiceList";
+import IntroModal from "../components/IntroModal";
+import useGapSelection from "../hooks/useGapSelection";
+import { analystDescriptions } from "../constants/ResearchGapData";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ResearchGap() {
-  const [activeCategory, setActiveCategory] = useState('conceptual');
+  const [activeCategory, setActiveCategory] = useState("conceptual");
   const [isIntroModalOpen, setIsIntroModalOpen] = useState(true);
   const { selectedGaps, toggleGap, isSelected } = useGapSelection();
   const [searchParams] = useSearchParams();
 
   const { data } = useQuery({
-    queryKey: ['repoData', searchParams.get('papers')],
+    queryKey: ["repoData", searchParams.get("papers")],
     queryFn: async () => {
       const response = await fetch(
-        `/api/researchs/gaps?researchsIds=${searchParams.get('papers')}`
+        `/api/researchs/gaps?researchsIds=${searchParams.get("papers")}`
       );
 
       if (!response.ok) {
-        throw new Error('Failed to load papers');
+        throw new Error("Failed to load papers");
       }
 
       const result = await response.json();
-      console.log('result:', result);
+      console.log("result:", result);
       return result;
     },
   });
@@ -37,20 +37,20 @@ export default function ResearchGap() {
     if (!data?.gaps || !Array.isArray(data.gaps)) return base;
 
     for (const gap of data.gaps) {
-      const key = String(gap?.type ?? '')
+      const key = String(gap?.type ?? "")
         .trim()
         .toLowerCase();
 
-      if (key.startsWith('concept')) {
+      if (key.startsWith("concept")) {
         base.conceptual = Array.isArray(gap?.researchs) ? gap.researchs : [];
-      } else if (key.startsWith('method')) {
+      } else if (key.startsWith("method")) {
         base.methodological = Array.isArray(gap?.researchs)
           ? gap.researchs
           : [];
-      } else if (key.startsWith('empir')) {
+      } else if (key.startsWith("empir")) {
         base.empirical = Array.isArray(gap?.researchs) ? gap.researchs : [];
       } else {
-        console.warn('Unknown gap type:', gap?.type);
+        console.warn("Unknown gap type:", gap?.type);
       }
     }
 
@@ -70,9 +70,9 @@ export default function ResearchGap() {
           <div className="flex items-center gap-6 flex-shrink-0">
             <Link to="/" className="flex-shrink-0">
               <img
-                src="/logo.png"
+                src="/logo_icon.png"
                 alt="Logo"
-                className="w-10 h-10 object-contain cursor-pointer"
+                className="w-14 h-14 object-contain cursor-pointer"
               />
             </Link>
 
@@ -81,29 +81,29 @@ export default function ResearchGap() {
             {/* 3가지 기준 버튼 */}
             <div className="flex gap-4 ml-auto">
               <button
-                onClick={() => setActiveCategory('conceptual')}
+                onClick={() => setActiveCategory("conceptual")}
                 className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeCategory === 'conceptual' ? 'ring-2 ring-white' : ''
+                  activeCategory === "conceptual" ? "ring-2 ring-white" : ""
                 }`}
-                style={{ backgroundColor: '#3E454B', color: 'white' }}
+                style={{ backgroundColor: "#3E454B", color: "white" }}
               >
                 Conceptual Analyst
               </button>
               <button
-                onClick={() => setActiveCategory('methodological')}
+                onClick={() => setActiveCategory("methodological")}
                 className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeCategory === 'methodological' ? 'ring-2 ring-white' : ''
+                  activeCategory === "methodological" ? "ring-2 ring-white" : ""
                 }`}
-                style={{ backgroundColor: '#61707B', color: 'white' }}
+                style={{ backgroundColor: "#61707B", color: "white" }}
               >
                 Methodological Analyst
               </button>
               <button
-                onClick={() => setActiveCategory('empirical')}
+                onClick={() => setActiveCategory("empirical")}
                 className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeCategory === 'empirical' ? 'ring-2 ring-white' : ''
+                  activeCategory === "empirical" ? "ring-2 ring-white" : ""
                 }`}
-                style={{ backgroundColor: '#869DAD', color: 'white' }}
+                style={{ backgroundColor: "#869DAD", color: "white" }}
               >
                 Empirical Analyst
               </button>

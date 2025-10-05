@@ -1,32 +1,32 @@
-import React from 'react';
-import { Search } from 'lucide-react';
-import FeatureCard from '../components/HomeCard';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { Search } from "lucide-react";
+import FeatureCard from "../components/HomeCard";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   let navigate = useNavigate();
   const cards = [
     {
       id: 1,
-      image: '/main01.png',
-      title: 'Discover and summarize papers related to your topic',
+      image: "/main01.png",
+      title: "Discover and summarize papers related to your topic",
     },
     {
       id: 2,
-      image: '/main02.png',
-      title: 'Identify research gaps from the selected papers',
+      image: "/main02.png",
+      title: "Identify research gaps from the selected papers",
     },
     {
       id: 3,
-      image: '/main03.png',
-      title: 'Review the hypotheses',
+      image: "/main03.png",
+      title: "Review the hypotheses",
     },
   ];
 
   const search = (e) => {
     e.preventDefault();
     const searchTerm = e.target.elements[0].value;
-    console.log('Searching for:', searchTerm);
+    console.log("Searching for:", searchTerm);
     navigate(`/paper?query=${encodeURIComponent(searchTerm)}`);
   };
 
@@ -34,7 +34,11 @@ export default function Home() {
     <div className="min-h-screen bg-[#1D1D1D] text-white">
       <header className="border-b border-white">
         <div className="container mx-auto px-6 py-4">
-          <h1 className="text-2xl font-bold">CosmosX</h1>
+          <img
+            src="/logo.png"
+            alt="Logo"
+            className="w-32 object-contain cursor-pointer"
+          />
         </div>
       </header>
 
@@ -45,7 +49,7 @@ export default function Home() {
             From Paper Discovery to Hypothesis, All in One Flow
           </h2>
           <p className="text-base">
-            CosmosX guides you step by step through the journey of finding and
+            GAsP guides you step by step through the journey of finding and
             shaping your research ideas.
           </p>
         </div>
