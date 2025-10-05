@@ -4,7 +4,7 @@ import FeatureCard from "../components/HomeCard";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const cards = [
     {
       id: 1,
@@ -44,6 +44,7 @@ export default function Home() {
             src="/logo.png"
             alt="Logo"
             className="w-32 object-contain cursor-pointer"
+            onClick={() => navigate("/")}
           />
         </div>
       </header>

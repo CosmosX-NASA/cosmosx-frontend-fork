@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Background from "./components/Background";
 
+import Member from "./pages/member";
 import LandingPage from "./pages/LandingPage";
 import Home from "./pages/home";
 import Paper from "./pages/paper";
@@ -22,6 +23,7 @@ ReactDOM.createRoot(root).render(
       <BrowserRouter>
         <Routes>
           <Route index element={<LandingPage />} />
+          <Route path="/member" element={<Member />} />
           <Route path="/home" element={<Home />} />
           <Route path="/paper" element={<Paper />} />
           <Route path="/research-gap" element={<ResearchGap />} />
