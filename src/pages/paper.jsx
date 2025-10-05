@@ -68,9 +68,7 @@ export default function Paper() {
     }
 
     console.log('Finding research gaps for papers:', selectedPapers);
-    navigate(
-      `https://api.cosmosx.site/research-gap?papers=${selectedPapers.join(',')}`
-    );
+    navigate(`/research-gap?papers=${selectedPapers.join(',')}`);
   };
 
   const paperListContent = (() => {
