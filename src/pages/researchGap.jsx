@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import GapCard from '../components/GapCard';
@@ -17,9 +17,12 @@ export default function ResearchGap() {
   const { data } = useQuery({
     queryKey: ['repoData', searchParams.get('papers')],
     queryFn: async () => {
-      const response = await fetch(
-        `/api/researchs/gaps?researchsIds=${searchParams.get('papers')}`
-      );
+      let papers = searchParams.get('papers');
+      if (!papers) papers = localStorage.getItem('selectedPapers');
+      let request_api = '/api/researchs/gaps';
+      if (papers) request_api += `?researchsIds=${papers}`;
+
+      const response = await fetch(request_api);
 
       if (!response.ok) {
         throw new Error('Failed to load papers');
@@ -30,6 +33,16 @@ export default function ResearchGap() {
       return result;
     },
   });
+
+  useEffect(() => {
+    const hasSeenIntro = localStorage.getItem('hasSeenIntro');
+    if (hasSeenIntro) {
+      setIsIntroModalOpen(false);
+    } else {
+      setIsIntroModalOpen(true);
+      localStorage.setItem('hasSeenIntro', 'true');
+    }
+  }, []);
 
   const researchGapData = useMemo(() => {
     const base = { conceptual: [], methodological: [], empirical: [] };

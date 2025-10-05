@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Search } from 'lucide-react';
 import FeatureCard from '../components/HomeCard';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +22,12 @@ export default function Home() {
       title: 'Review the hypotheses',
     },
   ];
+
+  useEffect(() => {
+    localStorage.removeItem('selectedPapers');
+    localStorage.removeItem('hasSeenIntro');
+    localStorage.removeItem('userId');
+  }, []);
 
   const search = (e) => {
     e.preventDefault();

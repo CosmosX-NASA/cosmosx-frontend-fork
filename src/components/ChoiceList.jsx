@@ -116,7 +116,7 @@ export default function ChoiceList({ selectedGaps, gapData }) {
   };
 
   const navigateToHypothesisPage = () => {
-    navigate('/hypo');
+    navigate('/hypotheses');
   };
 
   // 기준마다 배경색 지정
