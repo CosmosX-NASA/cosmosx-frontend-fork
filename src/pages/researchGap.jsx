@@ -1,12 +1,12 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import GapCard from '../components/GapCard';
-import ChoiceList from '../components/ChoiceList';
-import IntroModal from '../components/IntroModal';
-import useGapSelection from '../hooks/useGapSelection';
-import { analystDescriptions } from '../constants/ResearchGapData';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState, useMemo, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import GapCard from "../components/GapCard";
+import ChoiceList from "../components/ChoiceList";
+import IntroModal from "../components/IntroModal";
+import useGapSelection from "../hooks/useGapSelection";
+import { analystDescriptions } from "../constants/ResearchGapData";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ResearchGap() {
   const [activeCategory, setActiveCategory] = useState("conceptual");
@@ -17,9 +17,9 @@ export default function ResearchGap() {
   const { data } = useQuery({
     queryKey: ["repoData", searchParams.get("papers")],
     queryFn: async () => {
-      let papers = searchParams.get('papers');
-      if (!papers) papers = localStorage.getItem('selectedPapers');
-      let request_api = '/api/researchs/gaps';
+      let papers = searchParams.get("papers");
+      if (!papers) papers = localStorage.getItem("selectedPapers");
+      let request_api = "/api/researchs/gaps";
       if (papers) request_api += `?researchsIds=${papers}`;
 
       const response = await fetch(request_api);
@@ -35,12 +35,12 @@ export default function ResearchGap() {
   });
 
   useEffect(() => {
-    const hasSeenIntro = localStorage.getItem('hasSeenIntro');
+    const hasSeenIntro = localStorage.getItem("hasSeenIntro");
     if (hasSeenIntro) {
       setIsIntroModalOpen(false);
     } else {
       setIsIntroModalOpen(true);
-      localStorage.setItem('hasSeenIntro', 'true');
+      localStorage.setItem("hasSeenIntro", "true");
     }
   }, []);
 
@@ -77,7 +77,7 @@ export default function ResearchGap() {
     <>
       <Toaster />
 
-      <div className="h-screen bg-[#1D1D1D] text-white p-8 flex gap-6 overflow-hidden">
+      <div className="h-screen text-white p-8 flex gap-6 overflow-hidden">
         {/* 왼쪽 영역 */}
         <div className="w-5/7 flex-1 flex flex-col gap-6 min-h-0">
           <div className="flex items-center gap-6 flex-shrink-0">

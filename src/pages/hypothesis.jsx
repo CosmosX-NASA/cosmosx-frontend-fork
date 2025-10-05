@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import HypothesisCard from '../components/HypothesisCard';
-import HypothesisDetail from '../components/HypothesisDetail';
-import useHypotheses from '../hooks/useHypotheses';
-import { hypothesesData } from '../constants/HypothesesData';
-import { downloadMarkdown } from '../utils/downloadUtils';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import HypothesisCard from "../components/HypothesisCard";
+import HypothesisDetail from "../components/HypothesisDetail";
+import useHypotheses from "../hooks/useHypotheses";
+import { hypothesesData } from "../constants/HypothesesData";
+import { downloadMarkdown } from "../utils/downloadUtils";
 
 export default function Hypotheses() {
   let navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Hypotheses() {
   const currentHypothesis = hypotheses.find((h) => h.id === viewedHypothesisId);
 
   return (
-    <div className="h-screen bg-[#1A1A1A] text-white p-8 flex flex-col overflow-hidden">
+    <div className="h-screen text-white p-8 flex flex-col overflow-hidden">
       <div className="flex items-center gap-6 mb-6 flex-shrink-0">
         <Link to="/" className="flex-shrink-0">
           <img
@@ -79,7 +79,7 @@ export default function Hypotheses() {
               <p>Back to Research Gap</p>
             </button>
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               className="flex w-full bg-gray-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-gray-700 transition-colors justify-center items-center gap-4"
             >
               <img

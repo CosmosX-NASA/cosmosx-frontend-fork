@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Search } from 'lucide-react';
-import FeatureCard from '../components/HomeCard';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Search } from "lucide-react";
+import FeatureCard from "../components/HomeCard";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   let navigate = useNavigate();
@@ -24,9 +24,9 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    localStorage.removeItem('selectedPapers');
-    localStorage.removeItem('hasSeenIntro');
-    localStorage.removeItem('userId');
+    localStorage.removeItem("selectedPapers");
+    localStorage.removeItem("hasSeenIntro");
+    localStorage.removeItem("userId");
   }, []);
 
   const search = (e) => {
@@ -37,7 +37,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1D1D1D] text-white">
+    <div className="min-h-screen text-white">
       <header className="border-b border-white">
         <div className="container mx-auto px-6 py-4">
           <img

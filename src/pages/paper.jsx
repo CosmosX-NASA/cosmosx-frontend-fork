@@ -99,7 +99,7 @@ export default function Paper() {
   })();
 
   return (
-    <div className="max-h-screen bg-[#1D1D1D] text-white flex p-8 gap-8">
+    <div className="max-h-screen text-white flex p-8 gap-8">
       {/* 왼쪽 영역 */}
       <div className="w-2/5 flex flex-col">
         <div className="flex items-center gap-6 mb-6">
