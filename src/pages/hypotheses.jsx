@@ -1,12 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import HypothesisCard from "../components/HypothesisCard";
-import HypothesisDetail from "../components/HypothesisDetail";
-import useHypotheses from "../hooks/useHypotheses";
-import { hypothesesData } from "../constants/HypothesesData";
-import { downloadMarkdown, downloadPDF } from "../utils/downloadUtils";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import HypothesisCard from '../components/HypothesisCard';
+import HypothesisDetail from '../components/HypothesisDetail';
+import useHypotheses from '../hooks/useHypotheses';
+import { hypothesesData } from '../constants/HypothesesData';
+import { downloadMarkdown } from '../utils/downloadUtils';
 
 export default function Hypotheses() {
+  let navigate = useNavigate();
   const { hypotheses, viewedHypothesisId, selectHypothesis, isViewed } =
     useHypotheses(hypothesesData);
 
@@ -44,11 +45,18 @@ export default function Hypotheses() {
               />
             ))}
           </div>
-          <Link to="/" className="flex-shrink-0">
-            <button className="w-full bg-gray-600 text-white py-4 rounded-xl font-semibold hover:bg-gray-700 transition-colors">
-              Home
-            </button>
-          </Link>
+          <button
+            onClick={() => downloadMarkdown(hypotheses)}
+            className="flex justify-center items-center gap-4 text-lg w-full bg-gray-600 text-white py-4 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
+          >
+            <img
+              alt="Home"
+              src="/src/assets/markdown.png"
+              width={30}
+              height={30}
+            />
+            <p>Markdown Download</p>
+          </button>
         </div>
 
         {/* 오른쪽 영역 */}
@@ -59,16 +67,28 @@ export default function Hypotheses() {
 
           <div className="grid grid-cols-2 gap-8 flex-shrink-0">
             <button
-              onClick={() => downloadMarkdown(hypotheses)}
-              className="w-full bg-gray-600 text-white py-4 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
+              onClick={() => navigate(-1)}
+              className="flex justify-center items-center gap-2 w-full bg-gray-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-gray-700 transition-colors"
             >
-              Markdown Download
+              <img
+                alt="Home"
+                src="/src/assets/back.png"
+                width={28}
+                height={28}
+              />
+              <p>Back to Research Gap</p>
             </button>
             <button
-              onClick={() => downloadPDF(hypotheses)}
-              className="w-full bg-gray-600 text-white py-4 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
+              onClick={() => navigate('/')}
+              className="flex w-full bg-gray-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-gray-700 transition-colors justify-center items-center gap-4"
             >
-              PDF Download
+              <img
+                alt="Home"
+                src="/src/assets/home.png"
+                width={24}
+                height={24}
+              />
+              <p>Go Home</p>
             </button>
           </div>
         </div>

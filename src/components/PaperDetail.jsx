@@ -101,7 +101,7 @@ export default function PaperDetail({ paper, isLoading = false }) {
             Brief Summary
           </h2>
           <p className="text-sm text-gray-700 leading-relaxed">
-            {paper.brief_summary}
+            {paper.brief_summary.replace('*', '')}
           </p>
         </div>
       )}
@@ -112,7 +112,7 @@ export default function PaperDetail({ paper, isLoading = false }) {
             Overall Summary
           </h2>
           <p className="text-sm text-gray-700 leading-relaxed">
-            {paper.overall_summary}
+            {paper.overall_summary.replace('*', '')}
           </p>
         </div>
       )}
@@ -122,7 +122,7 @@ export default function PaperDetail({ paper, isLoading = false }) {
         <h2 className="text-lg font-bold text-gray-900 mb-3">Methods</h2>
         {paper.methods.split(' || ').map((method, index) => (
           <p key={index} className="text-sm text-gray-700 leading-relaxed mb-2">
-            {method}
+            {method.replace('*', '')}
           </p>
         ))}
       </div>
@@ -132,7 +132,7 @@ export default function PaperDetail({ paper, isLoading = false }) {
         <div>
           <h2 className="text-lg font-bold text-gray-900 mb-3">Results</h2>
           <p className="text-sm text-gray-700 leading-relaxed">
-            {paper.results}
+            {paper.results.replace('*', '')}
           </p>
         </div>
       )}
