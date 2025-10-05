@@ -10,7 +10,7 @@ export default function ChoiceList({ selectedGaps, gapData }) {
   const [generateCount, setGenerateCount] = useState(0);
   const [createdCount, setCreatedCount] = useState(0);
   const [progressCount, setProgressCount] = useState(0);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   // 1) Initialize from localStorage
   useEffect(() => {
@@ -29,9 +29,7 @@ export default function ChoiceList({ selectedGaps, gapData }) {
     const interval = setInterval(async () => {
       try {
         const res = await fetch(
-          `https://api.cosmosx.site/api/hypothesis/done?userId=${encodeURIComponent(
-            userId
-          )}`
+          `/api/hypothesis/done?userId=${encodeURIComponent(userId)}`
         );
         if (res.ok) {
           // The API may return either `{ count: number }` or a plain number
@@ -83,7 +81,7 @@ export default function ChoiceList({ selectedGaps, gapData }) {
     if (gapIds.length === 0) return; // 빈 배열이면 요청하지 않음
     console.log('Generating hypothesis for gaps:', gapIds, 'userId:', userId);
     try {
-      const res = await fetch('https://api.cosmosx.site/api/hypothesis', {
+      const res = await fetch('/api/hypothesis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: userId || null, gapIds }),

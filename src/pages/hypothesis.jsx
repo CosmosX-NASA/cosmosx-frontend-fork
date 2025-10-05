@@ -67,7 +67,7 @@ const normalizeHypothesis = (raw, index) => {
 };
 
 export default function Hypotheses() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const userIdParam = searchParams.get('userId') || '';
 
@@ -85,7 +85,7 @@ export default function Hypotheses() {
     queryKey: ['hypotheses', userIdParam || 'me'],
     queryFn: async () => {
       const resolvedUserId = userIdParam || getStoredUserId();
-      let apiUrl = 'https://api.cosmosx.site/api/hypothesis/me';
+      let apiUrl = '/api/hypothesis/me';
       if (resolvedUserId) {
         apiUrl += `?userId=${encodeURIComponent(resolvedUserId)}`;
       }

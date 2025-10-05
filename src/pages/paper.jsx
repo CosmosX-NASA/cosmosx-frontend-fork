@@ -1,11 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { HelpCircle, Send } from 'lucide-react';
 import PaperCard from '../components/PaperCard';
 import PaperDetail from '../components/PaperDetail';
 import HelpModal from '../components/HelpModal';
 import usePaperSelection from '../hooks/usePaperSelection';
-import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import PaperCardSkeleton from '../components/PaperCardSkeleton';
 
@@ -30,7 +29,7 @@ export default function Paper() {
     isSelected,
     isViewed,
   } = usePaperSelection();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [searchParams] = useSearchParams();
@@ -39,9 +38,7 @@ export default function Paper() {
     queryKey: ['repoData', searchParams.get('query')],
     queryFn: async () => {
       const response = await fetch(
-        `https://api.cosmosx.site/api/researchs?search=${searchParams.get(
-          'query'
-        )}&pageSize=5`
+        `/api/researchs?search=${searchParams.get('query')}&pageSize=5`
       );
 
       if (!response.ok) {
