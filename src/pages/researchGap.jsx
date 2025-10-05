@@ -125,9 +125,13 @@ export default function ResearchGap() {
 
           <div className="flex-1 bg-white rounded-2xl p-6 flex gap-6 min-h-0">
             {/* 에이전트 설명 */}
-            <div className="w-1/4 bg-gray-50 rounded-lg p-6 flex flex-col items-center justify-center text-center flex-shrink-0">
-              <div className="text-6xl mb-4">{currentAnalyst.emoji}</div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">
+            <div className="w-1/4 bg-gray-50 rounded-lg p-6 gap-4 flex flex-col items-center justify-center text-center flex-shrink-0">
+              <img
+                src={currentAnalyst.image}
+                alt={currentAnalyst.title}
+                className="w-40 h-40object-contain"
+              />
+              <h3 className="text-lg font-bold text-gray-900">
                 {currentAnalyst.title}
               </h3>
               <p className="text-sm text-gray-600 italic">

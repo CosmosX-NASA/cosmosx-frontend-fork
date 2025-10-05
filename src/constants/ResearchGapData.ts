@@ -135,20 +135,20 @@ export const researchGapData = {
 
 export const analystDescriptions = {
   conceptual: {
-    emoji: "👩‍🎓",
-    title: "Conceptual Analyst",
+    image: "/conceptual.png",
+    title: "Conceptual",
     description: '"I focus on establishing coherent theoretical frameworks."',
     color: "#3E454B",
   },
   methodological: {
-    emoji: "🧑‍🔬",
-    title: "Methodological Analyst",
+    image: "/methodological.png",
+    title: "Methodological",
     description: '"I ensure methodological rigor and measurement validity."',
     color: "#61707B",
   },
   empirical: {
-    emoji: "👨‍💻",
-    title: "Empirical Analyst",
+    image: "/empirical.png",
+    title: "Empirical",
     description:
       '"I emphasize evidence robustness and comprehensive data coverage."',
     color: "#869DAD",
