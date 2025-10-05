@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export default function HelpModal({ isOpen, onClose }) {
+export default function HelpModal({ isOpen, onClose, text }) {
   if (!isOpen) return null;
 
   return (
@@ -12,10 +12,7 @@ export default function HelpModal({ isOpen, onClose }) {
 
       {/* 도움말 모달 */}
       <div className="fixed bottom-24 left-8 bg-white rounded-2xl p-6 shadow-2xl z-50 max-w-md animate-slideUp">
-        <p className="text-base text-gray-700 leading-relaxed">
-          Select at least one out of the five papers to identify the RESEARCH
-          GAP related to your topic of interest.
-        </p>
+        <p className="text-base text-gray-700 leading-relaxed">{text}</p>
         <button
           onClick={onClose}
           className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm"

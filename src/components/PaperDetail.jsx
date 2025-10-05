@@ -1,10 +1,22 @@
-import React, { useState } from "react";
-import { ExternalLink } from "lucide-react";
-import ImageModal from "./ImageModal";
+import React, { useState } from 'react';
+import { ExternalLink } from 'lucide-react';
+import ImageModal from './ImageModal';
 
-export default function PaperDetail({ paper }) {
+export default function PaperDetail({ paper, isLoading = false }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (isLoading) {
+    return (
+      <div className="bg-[#E8E8E8] rounded-2xl w-full h-full flex items-center justify-center">
+        <div
+          className="w-12 h-12 border-4 border-gray-300 border-t-[#555555] rounded-full animate-spin"
+          role="status"
+          aria-label="Loading paper details"
+        />
+      </div>
+    );
+  }
 
   if (!paper) {
     return (
@@ -28,6 +40,12 @@ export default function PaperDetail({ paper }) {
     setIsModalOpen(false);
   };
 
+  const doiLink = paper.doi
+    ? paper.doi.startsWith('http')
+      ? paper.doi
+      : `https://doi.org/${paper.doi}`
+    : null;
+
   return (
     <div className="bg-[#E8E8E8] rounded-2xl w-full h-full overflow-y-auto p-8">
       {/* title & information */}
@@ -41,19 +59,21 @@ export default function PaperDetail({ paper }) {
             <span className="font-semibold">Author:</span> {paper.author}
           </p>
           <p>
-            <span className="font-semibold">Release Date:</span>{" "}
+            <span className="font-semibold">Release Date:</span>{' '}
             {paper.release_date}
           </p>
-          <a
-            href={paper.doi}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-white px-3 py-2 mt-3 rounded-lg
+          {doiLink && (
+            <a
+              href={doiLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-white px-3 py-2 mt-3 rounded-lg
              hover:bg-[#717171] hover:text-white transition-colors w-max"
-          >
-            <ExternalLink className="w-4 h-4" />
-            View Original
-          </a>
+            >
+              <ExternalLink className="w-4 h-4" />
+              View Original
+            </a>
+          )}
         </div>
       </div>
 
@@ -75,17 +95,47 @@ export default function PaperDetail({ paper }) {
         </div>
       )}
 
+      {paper.brief_summary && (
+        <div className="mb-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-3">
+            Brief Summary
+          </h2>
+          <p className="text-sm text-gray-700 leading-relaxed">
+            {paper.brief_summary}
+          </p>
+        </div>
+      )}
+
+      {paper.overall_summary && (
+        <div className="mb-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-3">
+            Overall Summary
+          </h2>
+          <p className="text-sm text-gray-700 leading-relaxed">
+            {paper.overall_summary}
+          </p>
+        </div>
+      )}
+
       {/* Methods */}
       <div className="mb-6">
         <h2 className="text-lg font-bold text-gray-900 mb-3">Methods</h2>
-        <p className="text-sm text-gray-700 leading-relaxed">{paper.methods}</p>
+        {paper.methods.split(' || ').map((method, index) => (
+          <p key={index} className="text-sm text-gray-700 leading-relaxed mb-2">
+            {method}
+          </p>
+        ))}
       </div>
 
       {/* Results */}
-      <div>
-        <h2 className="text-lg font-bold text-gray-900 mb-3">Results</h2>
-        <p className="text-sm text-gray-700 leading-relaxed">{paper.results}</p>
-      </div>
+      {paper.results && (
+        <div>
+          <h2 className="text-lg font-bold text-gray-900 mb-3">Results</h2>
+          <p className="text-sm text-gray-700 leading-relaxed">
+            {paper.results}
+          </p>
+        </div>
+      )}
 
       {/* Image Modal */}
       <ImageModal
