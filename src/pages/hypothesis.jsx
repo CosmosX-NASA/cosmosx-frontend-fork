@@ -167,12 +167,7 @@ export default function Hypotheses() {
             onClick={() => downloadMarkdown(hypotheses)}
             className="flex justify-center items-center gap-4 text-lg w-full bg-gray-600 text-white py-4 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
           >
-            <img
-              alt="Home"
-              src="/src/assets/markdown.png"
-              width={30}
-              height={30}
-            />
+            <img alt="Home" src="/markdown.png" width={30} height={30} />
             <p>Markdown Download</p>
           </button>
         </div>
@@ -196,24 +191,14 @@ export default function Hypotheses() {
               onClick={() => navigate(-1)}
               className="flex justify-center items-center gap-2 w-full bg-gray-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-gray-700 transition-colors"
             >
-              <img
-                alt="Home"
-                src="/src/assets/back.png"
-                width={28}
-                height={28}
-              />
+              <img alt="Home" src="/back.png" width={28} height={28} />
               <p>Back to Research Gap</p>
             </button>
             <button
               onClick={() => navigate('/')}
               className="flex w-full bg-gray-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-gray-700 transition-colors justify-center items-center gap-4"
             >
-              <img
-                alt="Home"
-                src="/src/assets/home.png"
-                width={24}
-                height={24}
-              />
+              <img alt="Home" src="/home.png" width={24} height={24} />
               <p>Go Home</p>
             </button>
           </div>
