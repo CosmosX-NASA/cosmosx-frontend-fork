@@ -1,5 +1,5 @@
-import React from "react";
-import { Link as LinkIcon } from "lucide-react";
+import React from 'react';
+import { Link as LinkIcon } from 'lucide-react';
 
 export default function HypothesisDetail({ hypothesis }) {
   if (!hypothesis) {
@@ -13,7 +13,7 @@ export default function HypothesisDetail({ hypothesis }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl w-full h-full overflow-y-auto p-8">
+    <div className="bg-white rounded-2xl w-full h-full overflow-y-auto p-8 stroke-12">
       {/* Statement */}
       <div className="mb-8">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Statement</h2>
@@ -34,7 +34,7 @@ export default function HypothesisDetail({ hypothesis }) {
       <div>
         <h2 className="text-xl font-bold text-gray-900 mb-4">References</h2>
         <div className="flex gap-3">
-          {hypothesis.references.map((ref) => (
+          {hypothesis.references.map((ref, index) => (
             <a
               key={ref.id}
               href={ref.url}
@@ -43,7 +43,7 @@ export default function HypothesisDetail({ hypothesis }) {
               className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors"
             >
               <LinkIcon className="w-4 h-4" />
-              {ref.title}
+              Paper {index + 1}
             </a>
           ))}
         </div>

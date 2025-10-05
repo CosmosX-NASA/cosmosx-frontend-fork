@@ -7,10 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://api.cosmosx.site',
         changeOrigin: true,
-        // If your backend runs on HTTPS with a self-signed cert, uncomment the next line
-        // secure: false,
       },
     },
   },

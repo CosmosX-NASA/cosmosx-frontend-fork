@@ -1,13 +1,13 @@
-import React, { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { HelpCircle, Send } from "lucide-react";
-import PaperCard from "../components/PaperCard";
-import PaperDetail from "../components/PaperDetail";
-import HelpModal from "../components/HelpModal";
-import usePaperSelection from "../hooks/usePaperSelection";
-import { useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import PaperCardSkeleton from "../components/PaperCardSkeleton";
+import React, { useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { HelpCircle, Send } from 'lucide-react';
+import PaperCard from '../components/PaperCard';
+import PaperDetail from '../components/PaperDetail';
+import HelpModal from '../components/HelpModal';
+import usePaperSelection from '../hooks/usePaperSelection';
+import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import PaperCardSkeleton from '../components/PaperCardSkeleton';
 
 const SKELETON_COUNT = 5;
 
@@ -15,6 +15,10 @@ function ListMessage({ message }) {
   return (
     <div className="text-sm text-gray-400 py-6 text-center">{message}</div>
   );
+}
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
 }
 
 export default function Paper() {
@@ -32,21 +36,22 @@ export default function Paper() {
   const [searchParams] = useSearchParams();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["repoData", searchParams.get("query")],
+    queryKey: ['repoData', searchParams.get('query')],
     queryFn: async () => {
       const response = await fetch(
-        `/api/researchs?search=${searchParams.get("query")}&pageSize=5`
+        `/api/researchs?search=${searchParams.get('query')}&pageSize=5`
       );
 
       if (!response.ok) {
-        throw new Error("Failed to load papers");
+        throw new Error('Failed to load papers');
       }
+      await sleep(1000);
 
       return response.json();
     },
   });
 
-  const query = searchParams.get("query") ?? "";
+  const query = searchParams.get('query') ?? '';
   const papers = data?.researchs ?? [];
   const currentPaper = useMemo(
     () => papers.find((paper) => paper.id === viewedPaper),
@@ -56,12 +61,12 @@ export default function Paper() {
   const handleFindResearchGap = (event) => {
     event.preventDefault();
     if (selectedPapers.length === 0) {
-      alert("Please select at least one paper to find research gaps.");
+      alert('Please select at least one paper to find research gaps.');
       return;
     }
 
-    console.log("Finding research gaps for papers:", selectedPapers);
-    navigate(`/research-gap?papers=${selectedPapers.join(",")}`);
+    console.log('Finding research gaps for papers:', selectedPapers);
+    navigate(`/research-gap?papers=${selectedPapers.join(',')}`);
   };
 
   const paperListContent = (() => {
@@ -75,7 +80,7 @@ export default function Paper() {
       const message =
         error instanceof Error
           ? error.message
-          : "Something went wrong while loading papers.";
+          : 'Something went wrong while loading papers.';
       return <ListMessage message={`Error: ${message}`} />;
     }
 
@@ -87,7 +92,7 @@ export default function Paper() {
       <PaperCard
         key={paper.id}
         title={paper.title}
-        description={`${paper.release_date?.slice(0, 7) ?? "N/A"} | ${
+        description={`${paper.release_date?.slice(0, 7) ?? 'N/A'} | ${
           paper.journal
         } | ${paper.author}`}
         isChecked={isSelected(paper.id)}
