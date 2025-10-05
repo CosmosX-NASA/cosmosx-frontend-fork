@@ -1,15 +1,119 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import HypothesisCard from "../components/HypothesisCard";
-import HypothesisDetail from "../components/HypothesisDetail";
-import useHypotheses from "../hooks/useHypotheses";
-import { hypothesesData } from "../constants/HypothesesData";
-import { downloadMarkdown } from "../utils/downloadUtils";
+import React from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import HypothesisCard from '../components/HypothesisCard';
+import HypothesisDetail from '../components/HypothesisDetail';
+import useHypotheses from '../hooks/useHypotheses';
+import { downloadMarkdown } from '../utils/downloadUtils';
+import { useQuery } from '@tanstack/react-query';
+
+const getStoredUserId = () => {
+  if (typeof window === 'undefined') return '';
+  return window.localStorage.getItem('cosmosx_userId') || '';
+};
+
+const normalizeReference = (entry, index) => {
+  if (!entry) return null;
+
+  if (typeof entry === 'string') {
+    return {
+      id: index,
+      title: entry,
+      url: entry,
+    };
+  }
+
+  const url = entry.url ?? entry.href ?? '';
+  if (!url) return null;
+
+  return {
+    id: entry.id ?? index,
+    title: entry.title ?? `Reference ${index + 1}`,
+    url,
+  };
+};
+
+const normalizeHypothesis = (raw, index) => {
+  if (!raw) {
+    return {
+      id: `hypothesis-${index}`,
+      title: `Hypothesis ${index + 1}`,
+      statement: '',
+      evidence: '',
+      usage: '',
+      references: [],
+    };
+  }
+
+  const referencesSource = Array.isArray(raw.research_urls)
+    ? raw.research_urls
+    : Array.isArray(raw.references)
+    ? raw.references
+    : [];
+
+  const references = referencesSource
+    .map((entry, refIndex) => normalizeReference(entry, refIndex))
+    .filter(Boolean);
+
+  const fallbackTitle = raw.title ?? raw.statement ?? `Hypothesis ${index + 1}`;
+
+  return {
+    id: raw.id ?? `hypothesis-${index}`,
+    title: fallbackTitle,
+    statement: raw.statement ?? '',
+    evidence: raw.evidence ?? '',
+    usage: raw.usage ?? '',
+    references,
+  };
+};
 
 export default function Hypotheses() {
   let navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const userIdParam = searchParams.get('userId') || '';
+
+  React.useEffect(() => {
+    if (!userIdParam || typeof window === 'undefined') return;
+    window.localStorage.setItem('cosmosx_userId', userIdParam);
+  }, [userIdParam]);
+
+  const {
+    isPending,
+    isError,
+    error,
+    data: fetchedHypotheses = [],
+  } = useQuery({
+    queryKey: ['hypotheses', userIdParam || 'me'],
+    queryFn: async () => {
+      const resolvedUserId = userIdParam || getStoredUserId();
+      let apiUrl = '/api/hypothesis/me';
+      if (resolvedUserId) {
+        apiUrl += `?userId=${encodeURIComponent(resolvedUserId)}`;
+      }
+      console.log('Fetching hypotheses from:', apiUrl);
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        const message = await response.text().catch(() => '');
+        throw new Error(message || 'Failed to load hypotheses');
+      }
+
+      let results = await response.json();
+      results = results['hypotheses'];
+      if (!Array.isArray(results)) {
+        return [];
+      }
+      results = results.filter((hypo) => hypo && hypo.status === 'DONE');
+
+      const res = results.map((result, index) =>
+        normalizeHypothesis(result, index)
+      );
+      return res;
+    },
+    suspense: false,
+  });
+
   const { hypotheses, viewedHypothesisId, selectHypothesis, isViewed } =
-    useHypotheses(hypothesesData);
+    useHypotheses(fetchedHypotheses);
 
   const currentHypothesis = hypotheses.find((h) => h.id === viewedHypothesisId);
 
@@ -36,10 +140,24 @@ export default function Hypotheses() {
             <HypothesisCard isAddButton={true} />
 
             {/* 가설 목록 */}
-            {hypotheses.map((hypothesis) => (
+            {isPending && (
+              <p className="text-gray-700 text-sm">Loading hypotheses...</p>
+            )}
+            {isError && !isPending && (
+              <p className="text-red-700 text-sm">
+                Failed to load hypotheses
+                {error?.message ? `: ${error.message}` : ''}
+              </p>
+            )}
+            {!isPending && !isError && hypotheses.length === 0 && (
+              <p className="text-gray-700 text-sm">
+                No hypotheses available yet.
+              </p>
+            )}
+            {hypotheses.map((hypothesis, index) => (
               <HypothesisCard
                 key={hypothesis.id}
-                hypothesis={hypothesis}
+                index={index}
                 isViewed={isViewed(hypothesis.id)}
                 onView={() => selectHypothesis(hypothesis.id)}
               />
@@ -62,7 +180,15 @@ export default function Hypotheses() {
         {/* 오른쪽 영역 */}
         <div className="w-3/5 flex flex-col gap-8">
           <div className="flex-1 min-h-0">
-            <HypothesisDetail hypothesis={currentHypothesis} />
+            {isPending ? (
+              <div className="bg-gray-100 rounded-2xl w-full h-full flex items-center justify-center">
+                <p className="text-gray-500 text-center px-8">
+                  Loading hypothesis...
+                </p>
+              </div>
+            ) : (
+              <HypothesisDetail hypothesis={currentHypothesis} />
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-8 flex-shrink-0">
@@ -79,7 +205,7 @@ export default function Hypotheses() {
               <p>Back to Research Gap</p>
             </button>
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate('/')}
               className="flex w-full bg-gray-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-gray-700 transition-colors justify-center items-center gap-4"
             >
               <img

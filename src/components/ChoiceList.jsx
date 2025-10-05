@@ -34,7 +34,7 @@ export default function ChoiceList({ selectedGaps, gapData }) {
         if (res.ok) {
           // The API may return either `{ count: number }` or a plain number
           const data = await res.json();
-          const count = typeof data === 'number' ? data : data?.count;
+          const count = typeof data === 'number' ? data : data['count'];
           if (typeof count === 'number') {
             setCreatedCount(count);
           }
@@ -84,7 +84,7 @@ export default function ChoiceList({ selectedGaps, gapData }) {
       const res = await fetch('/api/hypothesis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: userId || '', gapIds }),
+        body: JSON.stringify({ userId: userId || null, gapIds }),
       });
 
       if (res.ok) {
@@ -116,7 +116,11 @@ export default function ChoiceList({ selectedGaps, gapData }) {
   };
 
   const navigateToHypothesisPage = () => {
-    navigate('/hypotheses');
+    if (userId) {
+      navigate(`/Hypothesis?userId=${encodeURIComponent(userId)}`);
+      return;
+    }
+    navigate('/Hypothesis');
   };
 
   // 기준마다 배경색 지정
